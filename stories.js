@@ -109,3 +109,23 @@ function putUserStoriesOnPage() {
 
   $ownStories.show();
 }
+
+//function for listing user's favorites and star/not-star
+function putFavoritesListOnPage() {
+  console.debug("putFavoritesListOnPage");
+
+  $favoritedStories.empty();
+
+  if (currentUser.favorites.length === 0) {
+    $favoritedStories.append("<h5>No favorites added!</h5>");
+  } else {
+    for (let story of currentUser.favorites) {
+      const $story = generateStoryMarkup(story);
+      const $star = generateStarHTML(story, currentUser);
+      $favoritedStories.append($story);
+      $story.append($star);
+    }
+  }
+
+  $favoritedStories.show();
+}
