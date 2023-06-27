@@ -19,7 +19,7 @@ async function getAndShowStoriesOnStart() {
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDeleteBtn = false) {
   // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
@@ -33,6 +33,20 @@ function generateStoryMarkup(story) {
         <small class="story-user">posted by ${story.username}</small>
       </li>
     `);
+}
+//make delete button HTML for story
+function generateDeleteBtnHTML() {
+  return `<span class="trash-can">
+            <i class="fas fa-trash-alt"></i>
+          </span>`;
+}
+//make favorite/non-favorite star for story
+function generateStarHTML(story, user) {
+  const isFavorite = user.isFavorite(story);
+  const starType = isFavorite ? "fas" : "far";
+  return `<span class="star">
+            <i class="${starType} fa-star"></i>
+          </span>`;
 }
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
