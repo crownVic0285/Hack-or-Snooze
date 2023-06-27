@@ -91,3 +91,21 @@ async function submitNewStory(evt) {
   $submitForm.trigger("reset");
 }
 $submitForm.on("submit", submitNewStory);
+
+//function for listing user's stories
+function putUserStoriesOnPage() {
+  console.debug("putUserStoriesOnPage");
+
+  $ownStories.empty();
+
+  if (currentUser.ownStories.length === 0) {
+    $ownStories.append("<h5>No stories added by user yet!</h5>");
+  } else {
+    for (let story of currentUser.ownStories) {
+      const $story = generateStoryMarkup(story, true);
+      $ownStories.append($story);
+    }
+  }
+
+  $ownStories.show();
+}
