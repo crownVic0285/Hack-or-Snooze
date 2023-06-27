@@ -64,3 +64,30 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+//deleting a story
+async function deleteStory(evt) {
+  console.debug("deleteStory");
+  const $closestLi = $(evt.target).closest("li");
+  const storyId = $closestLi.attr("id");
+  await storyList.deleteStory(currentUser, storyId);
+  await putUserStoriesOnPage();
+}
+$ownStories.on("click", ".trash-can", deleteStory);
+//submitting a new story
+async function submitNewStory(evt) {
+  console.debug("submitNewStory");
+  evt.preventDefault();
+
+  const author = $("#create-author").val();
+  const title = $("#create-title").val();
+  const url = $("#create-url").val();
+  const username = currentUser.username;
+  const storyData = { title, author, url, username };
+  const story = await storyList.addStory(currentUser, storyData);
+  const $story = generateStoryMarkup(story);
+  $allStoriesList.prepend($story);
+
+  $submitForm.slideUp("slow");
+  $submitForm.trigger("reset");
+}
+$submitForm.on("submit", submitNewStory);
